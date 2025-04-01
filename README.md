@@ -15,7 +15,7 @@
 
 ## News 🗞️
 
-* **🔥 [2025/03/26]:** We released the code for **Math Domain on LLaMA2-7B** of our paper **Boosting Large Language Models with Mask Fine-Tuning**[https://arxiv.org/abs/2503.22764]!
+* **🔥 [2025/03/26]:** We released the code for **Math Domain on LLaMA2-7B** of our paper **Boosting Large Language Models with Mask Fine-Tuning** [https://arxiv.org/abs/2503.22764]!
 
 ## Overview
 

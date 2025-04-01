@@ -1,0 +1,28 @@
+model_revision: main
+use_flash_attn: true
+tokenizer_name: meta-llama/Llama-2-7b-hf
+use_slow_tokenizer: true
+dataset_mixer:
+    KKHYA/metamath_converted: 10000
+    KKHYA/numinamath_tir_converted: 10000
+    KKHYA/numinamath_cot_converted: 10000
+    allenai/tulu-3-sft-personas-math: 10000
+    allenai/tulu-3-sft-personas-math-grade: 10000
+    allenai/tulu-3-sft-personas-algebra: 10000
+max_seq_length: 4096
+preprocessing_num_workers: 128
+per_device_train_batch_size: 1 # note, this is set up for 8 GPUs
+gradient_accumulation_steps: 16 # effective batch size 128 for tulu 2
+learning_rate: 2.0e-05
+lr_scheduler_type: linear
+warmup_ratio: 0.03
+weight_decay: 0.0
+num_train_epochs: 2
+with_tracking: true
+report_to:
+  - wandb
+logging_steps: 1
+subnet_mode: both
+subnet_type: local
+sparsity_attn: 0.9
+sparsity_mlp: 0.9

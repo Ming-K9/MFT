@@ -35,21 +35,20 @@ run_experiment() {
         echo "Masked Layers: $masked_layers"
         echo "====================================="
 
+        # You can also set --gradient_checkpointing or use `stage3_offloading_accelerate.conf` to save memory,
+        # but it will trade off speed.
         accelerate launch \
+            --main_process_port 29400 \
             --mixed_precision bf16 \
             --num_machines 1 \
             --num_processes $NUM_GPUS \
-            --main_process_port 29400 \
             --use_deepspeed \
             --deepspeed_config_file configs/ds_configs/stage3_no_offloading_accelerate.conf \
             scripts/finetune.py \
             "$CONFIG_FILE" \
             --model_name_or_path=$BASE_MODEL \
             --output_dir=$OUTPUT_DIR \
-            --masked_layers="$masked_layers" \
-            --report_to=wandb \
-            --num_train_epochs=2 \
-            --keep_last_n_checkpoints=-1
+            --masked_layers="$masked_layers"
         
         # Apply masks
         python scripts/apply_masks.py \

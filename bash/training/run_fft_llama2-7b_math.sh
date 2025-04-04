@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# Environment variables setup
 export WANDB_API_KEY=
 export HF_TOKEN=
 
+# Basic configuration
 NUM_GPUS=8
 CONFIG_FILE=configs/train_configs/llama2_7b_math_fft.yaml
 EXP_ID=fft_7b_math
@@ -29,9 +31,7 @@ echo "Using config file: $CONFIG_FILE"
         --deepspeed_config_file configs/ds_configs/stage3_no_offloading_accelerate.conf \
         scripts/finetune.py \
         "$CONFIG_FILE" \
-        --report_to=wandb \
-        --output_dir=$OUTPUT_DIR \
-        --num_train_epochs=2
+        --output_dir=$OUTPUT_DIR
 
     echo "==== EXPERIMENT COMPLETED: $EXP_ID ===="
     echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"

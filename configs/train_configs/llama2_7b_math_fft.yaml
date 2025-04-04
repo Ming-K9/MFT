@@ -18,6 +18,7 @@ learning_rate: 2.0e-05
 lr_scheduler_type: linear
 warmup_ratio: 0.03
 weight_decay: 0.0
+num_train_epochs: 2
 with_tracking: true
 report_to:
   - wandb

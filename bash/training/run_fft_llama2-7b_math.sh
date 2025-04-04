@@ -16,7 +16,6 @@ echo "Using config file: $CONFIG_FILE"
     echo "==== STARTING EXPERIMENT: $EXP_ID ===="
     echo "Log File: $LOG_FILE"
     echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
-    echo "Masked Layers: $masked_layers"
     echo "====================================="
 
     # You can also set --gradient_checkpointing or use `stage3_offloading_accelerate.conf` to save memory,

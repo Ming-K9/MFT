@@ -102,6 +102,8 @@ python scripts/apply_masks.py \
     --output_dir <path_to_output-dir>/mask_applied
 ```
 
+### Quickstart
+
 #### LLaMA2-7B
 
 **Math Domain:**

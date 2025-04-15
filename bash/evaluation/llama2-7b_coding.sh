@@ -1,15 +1,5 @@
 #!/bin/bash
 
-MATH_TASK_TYPES=(
-    "algebra"
-    "counting_and_probability"
-    "geometry"
-    "intermediate_algebra"
-    "number_theory"
-    "prealgebra"
-    "precalculus"
-)
-
 export HF_TOKEN=
 
 MODEL=$1
@@ -40,18 +30,9 @@ echo "Starting experiment: $EXP_ID"
 
     olmes --model "$MODEL_PATH" \
           --model-type "vllm" \
-          --task '{"task_name": "gsm8k", "num_shots": 8}' \
+          --task '{"task_name": "codex_humaneval", "num_shots": 0}' \
+                 '{"task_name": "codex_humanevalplus", "num_shots": 0}' \
           --output-dir "$OUTPUT_PATH"
-
-    for TASK in "${MATH_TASK_TYPES[@]}"; do
-        echo "Running: $TASK"
-        olmes --model "$MODEL_PATH" \
-              --model-type "vllm" \
-              --task "{\"task_name\": \"minerva_math_${TASK}\", \"num_shots\": 4}" \
-              --output-dir "$OUTPUT_PATH/math/eval_output_${TASK}"
-    done
-
-    python scripts/get_math_score.py "$OUTPUT_PATH"
 
     echo "==== EXPERIMENT COMPLETED: $EXP_ID ===="
     echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"

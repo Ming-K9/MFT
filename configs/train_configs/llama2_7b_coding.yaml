@@ -1,0 +1,22 @@
+model_name_or_path: meta-llama/Llama-2-7b-hf
+model_revision: main
+use_flash_attn: true
+tokenizer_name: meta-llama/Llama-2-7b-hf
+use_slow_tokenizer: true
+dataset_mixer:
+    allenai/tulu-3-sft-personas-code: 10000
+    KKHYA/evol_codealpaca_converted: 10000
+    KKHYA/codefeedback_filtered_instructions_converted: 10000
+max_seq_length: 4096
+preprocessing_num_workers: 128
+per_device_train_batch_size: 1 # note, this is set up for 8 GPUs
+gradient_accumulation_steps: 16
+learning_rate: 2.0e-05
+lr_scheduler_type: linear
+warmup_ratio: 0.03
+weight_decay: 0.0
+num_train_epochs: 2
+with_tracking: true
+report_to:
+  - wandb
+logging_steps: 1

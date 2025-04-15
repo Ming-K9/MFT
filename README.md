@@ -1,4 +1,5 @@
 # Mask-finetune for LLMs
+arxiv: **Boosting Large Language Models with Mask Fine-Tuning** [https://arxiv.org/abs/2503.22764]
 
 **Table of Contents**
 
@@ -15,7 +16,8 @@
 
 ## News 🗞️
 
-* **🔥 [2025/03/26]:** We released the code for **Math Domain on LLaMA2-7B** of our paper **Boosting Large Language Models with Mask Fine-Tuning** [https://arxiv.org/abs/2503.22764]!
+* **🔥 [2025/04/14]:** We release the code for **Coding Domain on LLaMA2-7B**!
+* **🔥 [2025/03/26]:** We release the code for **Math Domain on LLaMA2-7B**!
 
 ## Overview
 
@@ -47,9 +49,15 @@ bash setup_train_env.sh
 
 Before training, you need to modify the WANDB_API_KEY and HF_TOKEN in the training bash file, as well as the machine settings to compile with your machine.
 
-### LLaMA2-7B:
+### Quickstart
 
-**Math Domain:**
+```shell
+conda activate mft
+cd MFT
+bash <path_to_config>
+```
+
+**Example:**
 
 #### FFT
 
@@ -81,7 +89,9 @@ conda activate olmes
 bash setup_eval_env.sh
 ```
 
-### Evaluate
+### Apply Learned Mask
+
+In the training bash, the learned mask will be automatically applied to the fft model. The model applied with the mask will be saved in a folder named "mask_applied" in the output folder.
 
 If you already have a mask (usually saved as `masks.pt`), you can directly apply it to the corresponding model using following command:
 
@@ -92,13 +102,13 @@ python scripts/apply_masks.py \
     --output_dir <path_to_output-dir>/mask_applied
 ```
 
-#### Math Domain
+#### LLaMA2-7B
 
-**LLaMA2-7B:**
+**Math Domain:**
 
 | Task  | Fully-finetune | Mask-finetune                      |
 |:------|:--------------:|:----------------------------------:|
-| GSM8K | 46.9           | 47.3 <b>↑</b></span><sub>0.4</sub> |
+| GSM8K | 46.8           | 47.4 <b>↑</b></span><sub>0.6</sub> |
 | MATH  | 6.7            | 7.6 <b>↑</b></span><sub>0.9</sub>  |
 
 To reproduce these results use the following command:
@@ -111,6 +121,24 @@ bash bash/evaluation/llama2-7b_math.sh masktune_7b_local_4-7-layers_0.9_math
 ```
 
 The evaluation results will be saved to a folder named in **eval_output** in `output/fft_7b_math` and `output/masktune_7b_local_4-7-layers_0.9_math/mask_applied`.
+
+**Coding Domain:**
+
+| Task       | Fully-finetune | Mask-finetune                      |
+|:-----------|:--------------:|:----------------------------------:|
+| HumanEval  | 29.9           | 33.5 <b>↑</b></span><sub>3.6</sub> |
+| HumanEval+ | 25.0           | 29.9 <b>↑</b></span><sub>4.9</sub> |
+
+To reproduce these results use the following command:
+
+```shell
+conda activate olmes
+cd MFT
+bash bash/evaluation/llama2-7b_coding.sh fft_7b_coding
+bash bash/evaluation/llama2-7b_coding.sh masktune_7b_local_20-23-layers_0.9_coding
+```
+
+The evaluation results will be saved to a folder named in **eval_output** in `output/fft_7b_coding` and `output/masktune_7b_local_20-23-layers_0.9_coding/mask_applied`.
 
 ## Citation
 

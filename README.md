@@ -1,5 +1,5 @@
 # Mask-finetune for LLMs
-arxiv: **Boosting Large Language Models with Mask Fine-Tuning** [https://arxiv.org/abs/2503.22764]
+arxiv: [**Boosting Large Language Models with Mask Fine-Tuning**](https://arxiv.org/abs/2503.22764)
 
 **Table of Contents**
 

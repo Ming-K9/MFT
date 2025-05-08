@@ -116,36 +116,30 @@ def generate_l1_masks(model, sparsity_attn, sparsity_mlp, masked_layers, subnet_
             continue
 
         # Calculate L1 norm
-        shape = param.data.shape
         if "self_attn" in name:
             if subnet_mode in ["attn", "both"]:
                 sparsity = sparsity_attn
-                score = param.abs().mean(dim=[1, 2, 3]) if len(shape) == 4 else param.abs().mean(dim=1)
+                score = param.abs().flatten()
             else:
                 continue
         elif "mlp" in name:
             if subnet_mode in ["mlp", "both"]:
                 sparsity = sparsity_mlp
-                score = param.abs().mean(dim=[1, 2, 3]) if len(shape) == 4 else param.abs().mean(dim=1)
+                score = param.abs().flatten()
             else:
                 continue
         else:
             continue
 
-        # Determine number of elements to prune
-        n_elements = len(score)
-        n_pruned = min(int((1 - sparsity) * n_elements), n_elements - 1)  # 修改这里，使用(1-sparsity)作为剪枝比例
-
         # Get pruning indices (smallest L1 norms)
-        sorted_indices = score.sort()[1]
-        pruned_indices = sorted_indices[:n_pruned].cpu()
+        sorted_idx = score.sort().indices
+        n_pruned   = int((1 - sparsity) * score.numel())
+        pruned_idx = sorted_idx[:n_pruned].cpu()
         
         # Create mask (1 for kept, 0 for pruned)
-        mask = torch.ones_like(score)
-        mask[pruned_indices] = 0
-
-        # Expand mask to match parameter shape if needed
-        mask = mask.view(-1, 1).expand_as(param)
+        flat_mask = torch.ones_like(score)
+        flat_mask[pruned_idx] = 0
+        mask = flat_mask.view(param.shape)
 
         module_name = name[:-7] if name.endswith(".weight") else name
         masks[module_name] = mask

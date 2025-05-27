@@ -5,8 +5,8 @@ export WANDB_API_KEY=
 export HF_TOKEN=
 
 # Basic configuration
-NUM_GPUS=8
-CONFIG_FILE=configs/train_configs/llama2_7b_coding.yaml
+NUM_GPUS=4
+CONFIG_FILE=configs/train_configs/llama2_7b_coding_fft.yaml
 EXP_ID=fft_7b_coding
 OUTPUT_DIR=output/$EXP_ID
 LOG_FILE=output/$EXP_ID/${EXP_ID}_$(date '+%Y%m%d_%H%M%S').log

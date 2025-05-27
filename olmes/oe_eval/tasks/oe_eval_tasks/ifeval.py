@@ -54,7 +54,7 @@ class IFEval(Task):
     VERSION = 0.1
     REQUEST_TYPE = RequestType.GENERATE_UNTIL
     TASK_CONFIG_DEFAULTS = {
-        "dataset_path": "HuggingFaceH4/ifeval",
+        "dataset_path": "google/IFEval",
         "native_id_field": "key",
         "primary_metric": "inst_level_loose_acc",
         "split": "train",

@@ -3,8 +3,6 @@
 export HF_TOKEN=
 
 MODEL=$1
-MODEL_PATH=""
-OUTPUT_PATH=""
 
 if [[ "$MODEL" == *"masktune"* ]]; then
     MODEL_PATH="output/$MODEL/mask_applied"

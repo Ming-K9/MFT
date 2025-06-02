@@ -16,6 +16,7 @@ arxiv: [**Boosting Large Language Models with Mask Fine-Tuning**](https://arxiv.
 
 ## News 🗞️
 
+* **🔥 [2025/06/02]:** We release the code for **Instruction Following Domain on LLaMA2-7B**!
 * **🔥 [2025/04/14]:** We release the code for **Coding Domain on LLaMA2-7B**!
 * **🔥 [2025/03/26]:** We release the code for **Math Domain on LLaMA2-7B**!
 
@@ -108,10 +109,10 @@ python scripts/apply_masks.py \
 
 **Math Domain:**
 
-| Task  | Fully-finetune | Mask-finetune                      |
-|:------|:--------------:|:----------------------------------:|
-| GSM8K | 46.8           | 47.4 <b>↑</b></span><sub>0.6</sub> |
-| MATH  | 6.7            | 7.6 <b>↑</b></span><sub>0.9</sub>  |
+| Task  | Pretrained | Fully-finetune | Mask-finetune                      |
+|:------|:----------:|:--------------:|:----------------------------------:|
+| GSM8K | 15.2       | 46.8           | 47.4 <b>↑</b></span><sub>0.6</sub> |
+| MATH  | 2.5        | 6.7            | 7.6 <b>↑</b></span><sub>0.9</sub>  |
 
 To reproduce these results use the following command:
 
@@ -126,10 +127,10 @@ The evaluation results will be saved to a folder named in **eval_output** in `ou
 
 **Coding Domain:**
 
-| Task       | Fully-finetune | Mask-finetune                      |
-|:-----------|:--------------:|:----------------------------------:|
-| HumanEval  | 29.9           | 33.5 <b>↑</b></span><sub>3.6</sub> |
-| HumanEval+ | 25.0           | 29.9 <b>↑</b></span><sub>4.9</sub> |
+| Task       | Pretrained | Fully-finetune | Mask-finetune                      |
+|:-----------|:----------:|:--------------:|:----------------------------------:|
+| HumanEval  | 25.8       | 29.9           | 33.5 <b>↑</b></span><sub>3.6</sub> |
+| HumanEval+ | 22.4       | 25.0           | 29.9 <b>↑</b></span><sub>4.9</sub> |
 
 To reproduce these results use the following command:
 
@@ -141,6 +142,26 @@ bash bash/evaluation/llama2-7b_coding.sh masktune_7b_local_20-23-layers_0.9_codi
 ```
 
 The evaluation results will be saved to a folder named in **eval_output** in `output/fft_7b_coding` and `output/masktune_7b_local_20-23-layers_0.9_coding/mask_applied`.
+
+**Instruction Following Domain:**
+
+| Task        | Pretrained | Fully-finetune | Mask-finetune                      |
+|:------------|:----------:|:--------------:|:----------------------------------:|
+| IF-Eval     | 34.3       | 35.7           | 40.9 <b>↑</b></span><sub>5.2</sub> |
+| Alpaca-Eval | 0.5        | 1.7            | 2.9  <b>↑</b></span><sub>1.2</sub> |
+
+To reproduce these results use the following command:
+
+```shell
+conda activate olmes
+cd MFT
+bash bash/evaluation/llama2-7b_if.sh fft_7b_if
+bash bash/evaluation/llama2-7b_if.sh masktune_7b_local_0-3-layers_0.9_if
+```
+
+The evaluation results will be saved to a folder named in **eval_output** in `output/fft_7b_if` and `output/masktune_7b_local_0-3-layers_0.9_if/mask_applied`.
+
+***Note***: The previously used evaluation dataset for IF-Eval, HuggingFaceH4/ifeval (as referenced in our paper), is no longer available. In this work, we replace it with google/ifeval. Although this change leads to slightly lower performance for all settings, it does not affect the validity of our proposed method.
 
 ## Citation
 

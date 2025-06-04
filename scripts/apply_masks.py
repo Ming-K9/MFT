@@ -10,7 +10,6 @@ from transformers import (
     AutoTokenizer,
 )
 
-from dataset_processor import CHAT_TEMPLATES
 from utils import ArgumentParserPlus
 
 @dataclass
